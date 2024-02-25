@@ -14,7 +14,7 @@ Para rodar esse projeto você precisa ter instalado na sua maquina:
 
 Obs: se você não tem o `make` instalado é só abrir o arquivo `Makefile` e rodar os comandos manualmente.<br><br>
 
-`make run` Roda a aplicação.
+`make run` Roda a aplicação na porta `3000`.
 <br><br>
 
 `make down` Derruba a aplicação.
