@@ -1,0 +1,53 @@
+version: '3.5'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: ./build/Dockerfile
+    container_name: app
+    working_dir: /var/www
+    restart: always
+    volumes:
+      - ../:/var/www
+    networks:
+      - backend
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: always
+    tty: true
+    ports:
+      - "80:80"
+      - "443"
+    volumes:
+      - ../:/var/www
+      - ./app.conf:/etc/nginx/conf.d/app.conf
+    networks:
+      - backend
+  mariadb:
+    image: mariadb:10.2
+    container_name: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: D#Dd328d392dy3
+      MYSQL_DATABASE: payment_php
+    networks:
+      - backend
+    restart: always
+    volumes:
+      - database:/var/lib/mysql
+    ports:
+      - 3306:3306
+  sqlite:
+    container_name: sqlite
+    image: drupalci/sqlite-3:dev
+    volumes:
+      - test-database:/mydatabase
+    ports:
+      - 5432:5432
+    restart: always
+networks:
+  backend:
+volumes:
+  database:
+  test-database:
